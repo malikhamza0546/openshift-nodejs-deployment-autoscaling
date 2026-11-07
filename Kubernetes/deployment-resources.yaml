@@ -1,0 +1,27 @@
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nodejs-ex-git-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: nodejs-ex-git
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 10
+
+For the Deployment resource settings, these are the values you configured in the OpenShift Deployment:
+resources:
+  limits:
+    cpu: 30m
+    memory: 100Mi
+  requests:
+    cpu: 3m
+    memory: 40Mi
